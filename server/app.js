@@ -40,7 +40,7 @@ app.use('/img/products', express.static(path.join(__dirname, '../img/products'))
 
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
-
+app.set('trust proxy', 1);
 
 app.use(
     helmet({

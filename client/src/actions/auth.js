@@ -19,10 +19,11 @@ export const loadUser = () => async dispatch => {
     const token = localStorage.getItem('token');
 
 
-    if (token) {
-        setAuthToken(token);
+    if (!token) {
+        return dispatch({ type: AUTH_ERROR });
     }
 
+    setAuthToken(token);
     
     try {
         const res = await axios.get('/api/v1/users/me');
