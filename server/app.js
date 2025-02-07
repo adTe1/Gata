@@ -21,6 +21,8 @@ const uploadRouter = require('./routes/uploadRoutes');
    
 const app = express();
 
+app.set('trust proxy', 1); // ή true
+
 // app.set('view engine', 'pug');
 // app.set('views', path.join(__dirname, 'views'));
 
