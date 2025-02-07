@@ -30,17 +30,13 @@ import { loadUser } from '../actions/auth';
 import setAuthToken from '../utils/setAuthToken';
 
 
-// Αν υπάρχει token, ορίστε το στα default headers του Axios
-if (localStorage.getItem('token')) {
-  setAuthToken(localStorage.getItem('token'));
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
 }
 
 const Rout = ({ shop, Filter, allcatefilter, addToCart, cart }) => {
   useEffect(() => {
-    // Κάνε dispatch στο loadUser μόνο αν υπάρχει token στο localStorage
-    if (localStorage.getItem('token')) {
-      store.dispatch(loadUser());
-    }
+    store.dispatch(loadUser());
   }, []);
 
   return (
