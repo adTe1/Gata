@@ -17,14 +17,14 @@ const app = require('./app');
 
 
 
-console.log(app.get('env'));  //development
-console.log(process.env);  
+// console.log(app.get('env'));  //development
+// console.log(process.env);  
 
 
-const DB = process.env.DATABASE.replace(    
-    '<PASSWORD>',
-    process.env.DATABASE_PASSWORD
-);
+// const DB = process.env.DATABASE.replace(    
+//     '<PASSWORD>',
+//     process.env.DATABASE_PASSWORD
+// );
 
 
 dbConnect().catch(err => console.log(err));

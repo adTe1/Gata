@@ -30,10 +30,9 @@ import { loadUser } from '../actions/auth';
 import setAuthToken from '../utils/setAuthToken';
 
 
-if (localStorage.token) {
-  setAuthToken(localStorage.token);
+if (localStorage.getItem('token')) {
+  setAuthToken(localStorage.getItem('token'));
 }
-
 const Rout = ({ shop, Filter, allcatefilter, addToCart, cart }) => {
   useEffect(() => {
     store.dispatch(loadUser());
