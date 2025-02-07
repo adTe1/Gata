@@ -1,4 +1,4 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const paypal = require('stripe')(process.env.PAYPAL_CLIENT_ID);
 const Product = require('./../models/productModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
@@ -11,7 +11,7 @@ exports.getCheckoutSession = catchAsync(async (req,res,next) => {
     const product = await Product.findById(req.params.productId);
 
     // 2) Create checkout session
-    const session = await stripe.checkout.sessions.create({
+    const session = await paypal.checkout.sessions.create({
         payment_method_types: ['card'],
         success_url: `${req.protocol}://${req.get('host')}`,
         cancel_url: `${req.protocol}://${req.get('host')}/product/${product.slug}`,

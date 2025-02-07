@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "postinstall": "npm install --prefix server",
     "start": "cd server && npm start",
     "start:prod": "cd server && npm start:prod",
     "test": "echo \"Error: no test specified\" && exit 1",
