@@ -21,7 +21,7 @@ const uploadRouter = require('./routes/uploadRoutes');
    
 const app = express();
 
-app.set('trust proxy', 1); // ή true
+app.set('trust proxy', true); // 1 ή true
 
 // app.set('view engine', 'pug');
 // app.set('views', path.join(__dirname, 'views'));
@@ -82,11 +82,14 @@ app.use(
     })
   );
   
-  
+
 
 // Development logging
 if(process.env.NODE_ENV === 'development'){
     app.use(morgan('dev'));
+    app.get('/', (req, res) => {
+      res.status(200).send('Hello from the server!');
+    });
 }
 
 
@@ -94,7 +97,7 @@ if(process.env.NODE_ENV === 'development'){
 // What max request from the same IP in 1 hour
 const limiter = rateLimit({
     max: 100,
-    windowM: 60 * 60 * 1000,
+    windowMs: 60 * 60 * 1000,
     message: 'Too many requests from this IP, please try again in an hour !'
 });
 app.use('/api',limiter);

@@ -1,4 +1,5 @@
 const Order = require('../models/orderModel');
+const Product = require('../models/productModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const factory = require('./handlerFactory');
@@ -12,6 +13,28 @@ exports.createOrder = catchAsync(async (req, res, next) => {
 
   const newOrder = await Order.create(req.body)
 
+  await Promise.all(
+    newOrder.orderItems.map(async (item) => {
+      const product = await Product.findById(item.product);
+      if (!product) {
+        throw new AppError(`Δεν βρέθηκε το προϊόν με id: ${item.product}`, 404);
+      }
+
+      
+      if (product.countInStock < item.qty) {
+        throw new AppError(
+          `Δεν υπάρχει αρκετό απόθεμα για το προϊόν: ${product.name}`,
+          400
+        );
+      }
+
+      product.countInStock -= item.qty;
+      // console.log(
+      //   `Προϊόν: ${product.name}, νέο stock: ${product.countInStock}`
+      // );
+      await product.save();
+    })
+  );
 
   res.status(201).json({
     status: 'success',
@@ -71,30 +94,7 @@ exports.updateOrderToPaid = catchAsync(async (req, res, next) => {
   });
 });
 
-// exports.updateOrderToPaid = catchAsync(async (req, res, next) => {
-//   const { id, status, update_time, email_address } = req.body;
 
-//   if (!id || !status || !update_time || !email_address) {
-//     return next(new AppError('Incomplete payment details', 400));
-//   }
-
-//   const order = await Order.findById(req.params.id);
-
-//   if (!order) {
-//     return next(new AppError('Order not found', 404));
-//   }
-
-//   order.isPaid = true;
-//   order.paidAt = Date.now();
-//   order.paymentResult = { id, status, update_time, email_address };
-
-//   const updatedOrder = await order.save();
-
-//   res.status(200).json({
-//     status: 'success',
-//     data: updatedOrder,
-//   });
-// });
 
 // @desc    Update order to delivered
 // @route   PUT /api/orders/:id/deliver
@@ -133,74 +133,4 @@ res.status(200).json({
 });
 
   });
-
-
-// exports.getMyOrders = catchAsync(async (req, res, next) => {
-//   const page = req.query.page * 1 || 1;
-//   const limit = req.query.limit * 1 || 10;
-//   const skip = (page - 1) * limit;
-
-//   const orders = await Order.find({ user: req.user._id })
-//     .skip(skip)
-//     .limit(limit)
-//     .sort('-createdAt');
-
-//   res.status(200).json({
-//     status: 'success',
-//     results: orders.length,
-//     data: orders,
-//   });
-// });
-
-
-
-
-
-
-
-
-
-
-
-// const Order = require('./../models/orderModel');
-// const catchAsync = require('./../utils/catchAsync');
-// const AppError = require('./../utils/appError');
-// const factory = require('./../controllers/handlerFactory');
-
-
-// // Post/api/orders
-// exports.createOrder = factory.createOne(Order);
-
-// // GET /api/orders/myorders
-// exports.getMyOrders = catchAsync(async (req, res, next) => { 
-//     res.send('add order items');
-// });
-
-// // GET /api/orders/:id
-// exports.getOrder = factory.getOne(Order);
-
-
-
-// // GET /api/orders/:id/pay
-// exports.updateOrderToPaid = catchAsync(async (req, res, next) => { 
-//     res.send('update order to paid');
-// });
-
-// // GET /api/orders/:id/deliver
-// //@access  Private/Admin/
-// exports.updateOrderToDelivered = catchAsync(async (req, res, next) => { 
-//     res.send('update order to delivered');
-// });
-
-
-// // GET /api/orders/
-// //@access  Private/Admin/
-// exports.getAllOrders = factory.getAll(Order); 
-
-
-
-
-
-
-
 
