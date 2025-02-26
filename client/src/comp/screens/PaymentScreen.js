@@ -21,7 +21,7 @@ const Payment = () => {
     const cart = useSelector((state) => state.cart);
     const { shippingAddress, PaymentMethod } = cart;
     const [paymentMethod, setPaymentMethod] = useState(PaymentMethod?.paymentMethod || '');
-    const [ setError] = useState('');
+    const [error, setError] = useState('');
     
     useEffect(() => {
         if (!shippingAddress) {
