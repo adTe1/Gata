@@ -40,6 +40,8 @@ const App = () => {
 
   const dispatch = useDispatch();
 
+  
+
   const addToCartHandler = (product, qty) => {
     dispatch(addToCart({ ...product, qty }));
   };
@@ -80,7 +82,11 @@ const App = () => {
 
   return (
     <>
-      <Nav search={search} setSearch={setSearch} searchProduct={searchProduct} />
+      <Nav 
+        search={search} 
+        setSearch={setSearch} 
+        searchProduct={searchProduct} 
+      />
 
       <Rout
         shop={shop}

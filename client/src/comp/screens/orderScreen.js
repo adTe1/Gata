@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap';
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import { toast } from 'react-toastify';
+import './orderScreen.css';
 
 import {
   getOrderDetails,
@@ -130,7 +131,7 @@ useEffect(() => {
   ) : error ? (
     <Message variant="danger">{error}</Message>
   ) : (
-    <>
+    <div className="order-screen"> 
       <h1>Order {order.data._id}</h1>
       <Row>
         <Col md={8}>
@@ -262,7 +263,7 @@ useEffect(() => {
             
         </Col>
       </Row>
-    </>
+    </div>
 
   )
    

@@ -4,12 +4,16 @@ import { QtySelect }from './../App';
 import './shop.css';
 import { FaHeart, FaEye } from "react-icons/fa";
 import { Button } from 'react-bootstrap';
+import { FaSkullCrossbones } from "react-icons/fa6";
 
 
-
-const Shop = ({ shop, Filter, allcatefilter, addToCartHandler, addToCart }) => {
+const Shop = ({ shop, Filter, allcatefilter, addToCart }) => {
  
   const [quantities, setQuantities] = useState({});
+
+  const [showDetail, setShowDetail]= useState(false)
+  //detail page data
+  const [detail, setDetail] = useState([])
 
  // This function updates the qty for a given product._id
   const handleSetQty = (productId, newQty) => {
@@ -25,7 +29,45 @@ const Shop = ({ shop, Filter, allcatefilter, addToCartHandler, addToCart }) => {
     addToCart(product, qty); 
   };
 
+  const detailpage =(product) =>
+    {
+        const detaildata = ([{product}])
+        const productdetail = detaildata[0]['product']
+        //console.log(productdetail)
+        setDetail(productdetail)  
+        setShowDetail(true)
+    }
+   // console.log(detail)
+    const closedetail  = () =>
+    {
+        setShowDetail(false)
+    }
+
   return (
+<>
+    {
+      showDetail ? 
+      <> 
+          <div className="product_detail">
+              <button className="close_btn" onClick={closedetail}><FaSkullCrossbones /></button>
+              <div className="container">
+                  <div className="img_box">
+                      <img src={detail.imageCover} alt=''></img>
+                  </div>
+                  <div className="info">
+                      <h4># {detail.cat}</h4>
+                      <h2>{detail.name}</h2>
+                      <p>{detail.description}</p>
+                      <h3> {detail.price} €</h3>
+                      <button onClick={() => handleAddToCart(detail)}>Add to Cart </button>
+                  </div>
+              </div>
+
+          </div>
+      
+      </>
+      :null
+  }
     <div className="shop">
       <h2># shop</h2>
       <p>Home . shop</p>
@@ -73,7 +115,7 @@ const Shop = ({ shop, Filter, allcatefilter, addToCartHandler, addToCart }) => {
                       />
                       <div className="icon">
                         <li><FaHeart /></li>
-                        <li><FaEye /></li>
+                        <li onClick={() => detailpage(product)}><FaEye /></li >
                       </div>
                     </div>
                     <div className="detail">
@@ -97,6 +139,7 @@ const Shop = ({ shop, Filter, allcatefilter, addToCartHandler, addToCart }) => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

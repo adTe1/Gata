@@ -96,14 +96,23 @@
     margin-right: 10px;
 }
 
-.header .mid_header .user .icon .btn button
+.header .mid_header .user .icon .btn
 {
-    border: none;
-    outline: none;
-    font-size: 16px;
-    background: none;
-    cursor: pointer;
-}
+    
+        display: inline-block;
+        background-color: #e9660f; /* Πορτοκαλί χρώμα */
+        color: #fff; /* Λευκό κείμενο */
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.8); /* Μαύρο πλέγμα γύρω από το κουμπί */
+        transition: box-shadow 0.3s;
+        
+    }
+    
+
+
 
 .header .last_header
 {
@@ -280,3 +289,4 @@
     background-color: #232322; /* Ανοιχτό γκρι φόντο κατά το hover */
     color: #dd6b00;
 }
+

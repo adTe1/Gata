@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import { Form, Button, Col } from 'react-bootstrap';
 import React from 'react';
 import './../cart.css';
+import './PaymentScreen.css';
 
 import CheckoutSteps from '../checkoutSteps';
 import { savePaymentMethod } from '../../actions/cartActions';
@@ -20,7 +21,7 @@ const Payment = () => {
     const cart = useSelector((state) => state.cart);
     const { shippingAddress, PaymentMethod } = cart;
     const [paymentMethod, setPaymentMethod] = useState(PaymentMethod?.paymentMethod || '');
-    const [error, setError] = useState('');
+    const [ setError] = useState('');
     
     useEffect(() => {
         if (!shippingAddress) {

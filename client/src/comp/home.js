@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { FaEye, FaHeart, FaFacebookF, FaTwitter, FaInstagram, FaCartArrowDown } from "react-icons/fa";
 import axios from 'axios'; 
 import { QtySelect }from './../App';
+import { FaSkullCrossbones } from "react-icons/fa6";
+import { Row } from "react-bootstrap";
 
 const Home = ({ addToCartHandler }) => {
     const [newProduct, setNewProduct] = useState([]);
@@ -14,7 +16,11 @@ const Home = ({ addToCartHandler }) => {
     const [loading, setLoading] = useState(true); 
     const [error, setError] = useState(null); 
     const [quantities, setQuantities] = useState({});
+    
 
+      const [showDetail, setShowDetail]= useState(false)
+      //detail page data
+      const [detail, setDetail] = useState([])
     
 const handleSetQty = (productId, newQty) => {
     setQuantities((prev) => ({
@@ -80,8 +86,46 @@ const handleSetQty = (productId, newQty) => {
     }
 
 
+    const detailpage =(product) =>
+        {
+            const detaildata = ([{product}])
+            const productdetail = detaildata[0]['product']
+            //console.log(productdetail)
+            setDetail(productdetail)  
+            setShowDetail(true)
+        }
+       // console.log(detail)
+        const closedetail  = () =>
+        {
+            setShowDetail(false)
+        }
+    
     return (
+       
         <>
+            {
+              showDetail ? 
+              <> 
+                  <div className="product_detail">
+                      <button className="close_btn" onClick={closedetail}><FaSkullCrossbones /></button>
+                      <div className="container">
+                          <div className="img_box">
+                              <img src={detail.imageCover} alt=''></img>
+                          </div>
+                          <div className="info">
+                              <h4># {detail.cat}</h4>
+                              <h2>{detail.name}</h2>
+                              <p>{detail.description}</p>
+                              <h3> {detail.price} €</h3>
+                              <button onClick={() => handleAddToCart(detail)}>Add to Cart </button>
+                          </div>
+                      </div>
+        
+                  </div>
+              
+              </>
+              :null
+          }
             <div className="home">
                 <div className="top_banner">
                     <div className="contant">
@@ -124,7 +168,8 @@ const handleSetQty = (productId, newQty) => {
 
                                             <div className="icon">
                                             <div className="icon_box">
-                                                <FaEye />
+
+                                                <Row onClick={() => detailpage(product)}><FaEye /></Row>
                                             </div>
                                             <div className="icon_box">
                                                 <FaHeart />

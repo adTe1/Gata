@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import { MdLocalShipping } from "react-icons/md";
 import './nav.css'
 import { CiSearch } from "react-icons/ci";
@@ -6,28 +6,28 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../actions/auth';
-import { NavDropdown, Row } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
+//import { NavDropdown, Row } from "react-bootstrap";
+//import { LinkContainer } from "react-router-bootstrap";
 
 
 
 
 
 
-const Nav = ({auth: { isAuthenticated, loading, userInfo }, logout, search,setSearch, searchproduct}) => {
+const Nav = ({auth: { isAuthenticated, loading, userInfo }, logout, search,setSearch, searchProduct}) => {
    
     
     const authLinks = (
        <div className='user'>
        <div className='icon'>
-       <li>
+       
        <div className='btn'>
        <Link to="/" onClick={logout}>
             Logout
             
         </Link>
        </div>
-       </li>
+       
     </div>
     </div>  
       );
@@ -71,11 +71,11 @@ const Nav = ({auth: { isAuthenticated, loading, userInfo }, logout, search,setSe
       const guestLinks = (
            <div className='user'>
            <div className='icon'>
-           <li>
+           
            <div className='btn'>
                <Link to="/login">Login</Link>
            </div>
-           </li>
+           
         </div>
         </div>  
       );
@@ -103,15 +103,14 @@ const Nav = ({auth: { isAuthenticated, loading, userInfo }, logout, search,setSe
         </div>
         <div className='mid_header'>
             <div className='logo'>
+            <Link to="/">
             <img src="/img/products/EIKONES/newlogo.jpeg" alt="newlogo" />
-
-
-
+            </Link>
 
             </div>
             <div className='search_box'>
                 <input type='text' value={search} placeholder='search' onChange={(e) => setSearch(e.target.value)}></input>
-                <button onClick={searchproduct}><CiSearch /></button>
+                <button onClick={searchProduct}><CiSearch /></button>
             </div>
             {!loading && (
                 <Fragment>
@@ -125,7 +124,7 @@ const Nav = ({auth: { isAuthenticated, loading, userInfo }, logout, search,setSe
                         {!loading && (
                             <Fragment>
                                 {isAuthenticated ? (
-                                    userInfo?.data?.data?.role === "admin"
+                                    userInfo?.data?.data?.role === "admin" || userInfo?.data?.data?.role === "moderator"
                                     ? adminDropdown
                                     : userProfileLink
                                 ) : (

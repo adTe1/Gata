@@ -10,6 +10,7 @@ import { clearCartItems } from './../../actions/cartActions';
 import Message from '../Message';
 import Loader from '../Loader';
 import { CREATE_ORDER_RESET } from '../../actions/types';
+import './PlaceOrderScreen.css';
 
 const PlaceOrder = () => {
     const navigate = useNavigate();
@@ -84,7 +85,7 @@ const PlaceOrder = () => {
   };
 
     return (
-        <>
+        <div className='placeholder-container'>
             <CheckoutSteps step1 step2 step3 step4 />
             <h3>#Place Order</h3>
             <Row>
@@ -193,7 +194,7 @@ const PlaceOrder = () => {
                     </Card>
                 </Col>
             </Row>
-        </>
+        </div>
     );
 };
 
